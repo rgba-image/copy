@@ -1,6 +1,6 @@
 {
   "name": "@rgba-image/copy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Copy from one image to another",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@rgba-image/create-image": "^0.1.1",
+    "@rgba-image/png": "^0.1.0",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.1"
   }

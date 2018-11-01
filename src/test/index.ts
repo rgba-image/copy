@@ -1,13 +1,34 @@
 import * as assert from 'assert'
 import * as fs from 'fs'
+import { fromPng } from '@rgba-image/png'
 import { createImage } from '@rgba-image/create-image'
 import { copy } from '..'
 
-const patternData = new Uint8ClampedArray( fs.readFileSync( './src/test/fixtures/pattern.bin' ) )
-const patternCopyData = new Uint8ClampedArray( fs.readFileSync( './src/test/fixtures/pattern-copy.bin' ) )
+const patternPng = fs.readFileSync( './src/test/fixtures/pattern.png' )
+const patternCopyPng = fs.readFileSync( './src/test/fixtures/pattern-copy.png' )
 
-const pattern = createImage( 8, 8, patternData )
-const patternCopy = createImage( 10, 10, patternCopyData )
+const pattern = fromPng( patternPng )
+const patternCopy = fromPng( patternCopyPng )
+
+const getNoise = () => {
+  const width = 1024
+  const height = 1024
+  const noise = createImage( width, height )
+
+  for( let y = 0; y < height; y++ ){
+    for( let x = 0; x < width; x++ ){
+      const index = ( y * width + x ) * 4
+      noise.data[ index ] = ( Math.random() * 256 ) | 0
+      noise.data[ index + 1 ] = ( Math.random() * 256 ) | 0
+      noise.data[ index + 2 ] = ( Math.random() * 256 ) | 0
+      noise.data[ index + 3 ] = ( Math.random() * 256 ) | 0
+    }
+  }
+
+  return noise
+}
+
+const noise = getNoise()
 
 describe( 'copy', () => {
   it( 'copies whole image', () => {
@@ -69,4 +90,23 @@ describe( 'copy', () => {
 
     assert.deepEqual( dest, pattern )
   } )
+
+  it( 'does an early return when sw or sh are 0', () => {
+    const emptyData = new Uint8Array( 8 * 8 * 4 )
+    const swDest = createImage( 8, 8 )
+    const shDest = createImage( 8, 8 )
+
+    copy( pattern, swDest, 0, 0, 0, 8 )
+    copy( pattern, shDest, 0, 0, 8, 0 )
+
+    assert.deepEqual( swDest.data, emptyData )
+    assert.deepEqual( shDest.data, emptyData )
+  })
+
+  // no test, just lazy benchmarking
+  it( 'big copy', () => {
+    const dest = createImage( 768, 768 )
+
+    copy( noise, dest, 0, 0, 1280, 1280, 0, 0 )
+  })
 })

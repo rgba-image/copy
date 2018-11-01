@@ -8,26 +8,33 @@ export const copy: SourceToDest = ( source: ImageData, dest: ImageData, sx = 0, 
   dx = dx | 0
   dy = dy | 0
 
+  if( sw <= 0 || sh <= 0 ) return
+
   const sourceData = new Uint32Array( source.data.buffer )
   const destData = new Uint32Array( dest.data.buffer )
-  const sourceSize = source.width * source.height
-  const destSize = dest.width * dest.height
 
   for ( let y = 0; y < sh; y++ ) {
+    const sourceY = sy + y
+
+    if( sourceY < 0 || sourceY >= source.height ) continue
+
+    const destY = dy + y
+
+    if( destY < 0 || destY >= dest.height ) continue
+
     for ( let x = 0; x < sw; x++ ) {
       const sourceX = sx + x
-      const sourceY = sy + y
-      const index = sourceY * source.width + sourceX
 
-      if ( index >= sourceSize ) continue
+      if( sourceX < 0 || sourceX >= source.width ) continue
 
       const destX = dx + x
-      const destY = dy + y
+
+      if ( destX < 0 || destX >= dest.width ) continue
+
+      const sourceIndex = sourceY * source.width + sourceX
       const destIndex = destY * dest.width + destX
 
-      if ( destIndex >= destSize ) continue
-
-      destData[ destIndex ] = sourceData[ index ]
+      destData[ destIndex ] = sourceData[ sourceIndex ]
     }
   }
 }
