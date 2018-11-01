@@ -7,7 +7,7 @@ image
 
 ## install
 
-`npm install @rgba-image/create-image`
+`npm install @rgba-image/copy`
 
 ## usage
 
