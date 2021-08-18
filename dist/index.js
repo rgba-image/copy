@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.copy = (source, dest, sx = 0, sy = 0, sw = source.width - sx, sh = source.height - sy, dx = 0, dy = 0) => {
+exports.copy = void 0;
+const copy = (source, dest, sx = 0, sy = 0, sw = source.width - sx, sh = source.height - sy, dx = 0, dy = 0) => {
     sx = sx | 0;
     sy = sy | 0;
     sw = sw | 0;
@@ -31,4 +32,5 @@ exports.copy = (source, dest, sx = 0, sy = 0, sw = source.width - sx, sh = sourc
         }
     }
 };
+exports.copy = copy;
 //# sourceMappingURL=index.js.map

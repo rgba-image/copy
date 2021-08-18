@@ -1,6 +1,10 @@
 import { SourceToDest } from '@rgba-image/common'
 
-export const copy: SourceToDest = ( source: ImageData, dest: ImageData, sx = 0, sy = 0, sw = source.width - sx, sh = source.height - sy, dx = 0, dy = 0 ) => {
+export const copy: SourceToDest = ( 
+  source: ImageData, dest: ImageData, 
+  sx = 0, sy = 0, sw = source.width - sx, sh = source.height - sy, 
+  dx = 0, dy = 0 
+) => {
   sx = sx | 0
   sy = sy | 0
   sw = sw | 0

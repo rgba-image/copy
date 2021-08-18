@@ -24,6 +24,13 @@ const getNoise = () => {
     }
     return noise;
 };
+const allEmpty = (array) => {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] !== 0)
+            return false;
+    }
+    return true;
+};
 const noise = getNoise();
 describe('copy', () => {
     it('copies whole image', () => {
@@ -75,13 +82,12 @@ describe('copy', () => {
         assert.deepEqual(dest, pattern);
     });
     it('does an early return when sw or sh are 0', () => {
-        const emptyData = new Uint8Array(8 * 8 * 4);
         const swDest = create_image_1.createImage(8, 8);
         const shDest = create_image_1.createImage(8, 8);
         __1.copy(pattern, swDest, 0, 0, 0, 8);
         __1.copy(pattern, shDest, 0, 0, 8, 0);
-        assert.deepEqual(swDest.data, emptyData);
-        assert.deepEqual(shDest.data, emptyData);
+        assert(allEmpty(swDest.data));
+        assert(allEmpty(shDest.data));
     });
     // no test, just lazy benchmarking
     it('big copy', () => {

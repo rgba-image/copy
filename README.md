@@ -38,11 +38,13 @@ If omitted, `sourceX` is `0`, `sourceY` is `0`, `sourceWidth` is
 `source.width - sourceX`, `sourceHeight` is `source.height - sourceY`, `destX`
 is `0` and `destY` is `0`
 
+Arguments are checked such that that no out of bound pixels are read or written
+
 ## License
 
 MIT License
 
-Copyright (c) 2018 Nik Coughlin
+Copyright (c) 2021 Nik Coughlin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
